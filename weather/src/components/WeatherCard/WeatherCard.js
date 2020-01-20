@@ -1,4 +1,5 @@
 import React from "react";
+import "./WeatherCard.scss";
 
 function WeatherCard(props) {
   const { forcast } = props;
@@ -10,22 +11,38 @@ function WeatherCard(props) {
   };
 
   return (
-    <div>
-      {forcast &&
-        forcast.map(day => {
-          return (
-            <div>
-              <p>Date: {day.applicable_date}</p>
-              <p>High: {formatTemp(day.max_temp)}°F</p>
-              <p>Low: {formatTemp(day.min_temp)}°F</p>
-              <p>Humidity: {day.humidity}%</p>
-              <p>Conditions: {day.weather_state_name}</p>
-              <p>
-                {day.wind_direction_compass} at {day.wind_speed} kmh{" "}
-              </p>
-            </div>
-          );
-        })}
+    <div className="weather-container">
+      {forcast && (
+        <div className="current-conditions">
+          <h2>Current Conditions</h2>
+          <p>Current Temp: {formatTemp(forcast[0].the_temp)} °F</p>
+          <p>Current Windspeed: {forcast[0].wind_speed.toFixed(2)} mph</p>
+        </div>
+      )}
+      <div className="forcast">
+        {forcast &&
+          forcast.map(day => {
+            return (
+              <div className="day">
+                <p>Date: {day.applicable_date.slice(6)}</p>
+                <p>High: {formatTemp(day.max_temp)}°F</p>
+                <p>Low: {formatTemp(day.min_temp)}°F</p>
+                <p>Humidity: {day.humidity}%</p>
+                <p>
+                  Expected Conditions: {day.weather_state_name}
+                </p>
+                <img
+                  className="weatherImage"
+                  src={`https://www.metaweather.com/static/img/weather/${day.weather_state_abbr}.svg`} alt=""
+                />
+                <p>
+                  {day.wind_direction_compass} at {day.wind_speed.toFixed(2)}{" "}
+                  mph
+                </p>
+              </div>
+            );
+          })}
+      </div>
     </div>
   );
 }

@@ -17,7 +17,7 @@ function App() {
 
   return (
     <div className="App">
-      <h2>Weather</h2>
+      
       <Header />
       <MainPage data={data} />
     </div>
